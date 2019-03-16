@@ -20,5 +20,23 @@ BOOST_PYTHON_MODULE(SpoutSDK)
 		.def("GetWidth", &SpoutReceiver::GetWidth)
 		.def("GetHeight", &SpoutReceiver::GetHeight)
 		;
+	class_<SpoutSend>("SpoutSend")
+		.def("SetupSender", &SpoutSend::SetupSender)
+		.def("SendTextureData", &SpoutSend::SendTextureData)
+		.def("CloseSender", &SpoutSend::CloseSender)
+		;
+	class_<SpoutReceive>("SpoutReceive")
+		.def("SetupReceiver", &SpoutReceive::SetupReceiver)
+		.def("ReceiveTextureData", &SpoutReceive::ReceiveTextureData)
+		.def("IsUpdated", &SpoutReceive::IsUpdated)
+		.def("IsInitialized", &SpoutReceive::IsInitialized)
+		.def("CloseReceiver", &SpoutReceive::CloseReceiver)
+		.def("SetReceiverName", &SpoutReceive::SetReceiverName)
+		.def("GetSenderFrame", &SpoutReceive::GetSenderFrame)
+		.def("GetSenderFps", &SpoutReceive::GetSenderFps)
+		.def("GetSenderWidth", &SpoutReceive::GetSenderWidth)
+		.def("GetSenderHeight", &SpoutReceive::GetSenderHeight)
+		;
+
 }
 

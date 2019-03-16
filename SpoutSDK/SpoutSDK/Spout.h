@@ -36,6 +36,9 @@
 #include "SpoutSender.h"
 #include "SpoutReceiver.h"
 
+#include "SpoutSend.h"
+#include "SpoutReceive.h"
+
 //	All documentation in SpoutSDK.pdf
 
 #endif

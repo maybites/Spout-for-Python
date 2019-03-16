@@ -54,10 +54,12 @@ def main():
     spoutReceiverWidth = args.spout_size[0]
     spoutReceiverHeight = args.spout_size[1]
     # create spout receiver
-    spoutReceiver = SpoutSDK.SpoutReceiver()
+    spoutReceiver = SpoutSDK.SpoutReceive()
 
 	# Its signature in c++ looks like this: bool pyCreateReceiver(const char* theName, unsigned int theWidth, unsigned int theHeight, bool bUseActive);
-    spoutReceiver.pyCreateReceiver(receiverName,spoutReceiverWidth,spoutReceiverHeight, False)
+    spoutReceiver.SetupReceiver(spoutReceiverWidth,spoutReceiverHeight, False)
+    
+    spoutReceiver.SetReceiverName(receiverName);
 
     # create texture for spout receiver
     textureReceiveID = glGenTextures(1)
@@ -77,13 +79,33 @@ def main():
     while(True):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                spoutReceiver.ReleaseReceiver()
+                spoutReceive.CloseReceiver()
                 pygame.quit()
                 quit()
+                
+        if spoutReceiver.IsUpdated():
+            # this means the resolution of the spout sender has changed
+            spoutReceiverWidth = spoutReceiver.GetSenderWidth()
+            spoutReceiverHeight = spoutReceiver.GetSenderHeight()
+            # create texture for spout receiver
+            textureReceiveID = glGenTextures(1)
+            # reinitalise receiver texture
+            glBindTexture(GL_TEXTURE_2D, textureReceiveID)
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
 
+            # copy data into texture
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, spoutReceiverWidth, spoutReceiverHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, None )
+            glBindTexture(GL_TEXTURE_2D, 0)
+        
+        if spoutReceiver.GetSenderFrame() > 0:
+            print("frame: ", spoutReceiver.GetSenderFrame())
+            
         # receive texture
         # Its signature in c++ looks like this: bool pyReceiveTexture(const char* theName, unsigned int theWidth, unsigned int theHeight, GLuint TextureID, GLuint TextureTarget, bool bInvert, GLuint HostFBO);
-        spoutReceiver.pyReceiveTexture(receiverName, spoutReceiverWidth, spoutReceiverHeight, textureReceiveID, GL_TEXTURE_2D, False, 0)
+        spoutReceiver.ReceiveTextureData(textureReceiveID, GL_TEXTURE_2D, 0)
 
         glBindTexture(GL_TEXTURE_2D, textureReceiveID)
 
