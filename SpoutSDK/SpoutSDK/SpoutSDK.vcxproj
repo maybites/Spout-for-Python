@@ -161,29 +161,37 @@
     <ClInclude Include="SpoutCommon.h" />
     <ClInclude Include="SpoutCopy.h" />
     <ClInclude Include="SpoutDirectX.h" />
+    <ClInclude Include="SpoutFrameCount.h" />
     <ClInclude Include="SpoutGLDXinterop.h" />
     <ClInclude Include="SpoutGLextensions.h" />
     <ClInclude Include="SpoutMemoryShare.h" />
+    <ClInclude Include="SpoutReceive.h" />
     <ClInclude Include="SpoutReceiver.h" />
     <ClInclude Include="SpoutSDK.h" />
+    <ClInclude Include="SpoutSend.h" />
     <ClInclude Include="SpoutSender.h" />
     <ClInclude Include="SpoutSenderMemory.h" />
     <ClInclude Include="SpoutSenderNames.h" />
     <ClInclude Include="SpoutSharedMemory.h" />
+    <ClInclude Include="SpoutUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spout.cpp" />
     <ClCompile Include="SpoutCopy.cpp" />
     <ClCompile Include="SpoutDirectX.cpp" />
+    <ClCompile Include="SpoutFrameCount.cpp" />
     <ClCompile Include="SpoutGLDXinterop.cpp" />
     <ClCompile Include="SpoutGLextensions.cpp" />
     <ClCompile Include="SpoutMemoryShare.cpp" />
+    <ClCompile Include="SpoutReceive.cpp" />
     <ClCompile Include="SpoutReceiver.cpp" />
     <ClCompile Include="SpoutSDK.cpp" />
+    <ClCompile Include="SpoutSend.cpp" />
     <ClCompile Include="SpoutSender.cpp" />
     <ClCompile Include="SpoutSenderMemory.cpp" />
     <ClCompile Include="SpoutSenderNames.cpp" />
     <ClCompile Include="SpoutSharedMemory.cpp" />
+    <ClCompile Include="SpoutUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
