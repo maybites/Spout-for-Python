@@ -45,7 +45,7 @@ Requires the prior installation of [MS Visual Studio 17](https://visualstudio.mi
 - Extract to C:\Program Files\boost_1_69_0
 - Open an Administrative access Command Prompt (right click on Command Prompt and Run As Administrator)
 - cd into C:\Program Files\boost_1_69_0
-- Type ```boostrap.bat``` and run the command
+- Type ```bootstrap.bat``` and run the command
 
 - Now run ```.\b2.exe --stagedir=./stage/x64 address-model=64 --build-type=complete --toolset=msvc-14.1 --threading=multi --runtime-link=shared --variant=debug```
 

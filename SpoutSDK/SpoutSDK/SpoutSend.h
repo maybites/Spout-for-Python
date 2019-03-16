@@ -1,13 +1,11 @@
 /*
 
-	spoutSharedMemory.h
-	
-	Thanks and credit to Malcolm Bechard the author of this class
+TODO: SpoutSender IsInitialized() necessary ?
 
-	https://github.com/mbechard
+					SpoutSend.h
+ 
 
-	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	Copyright (c) 2014-2019, Lynn Jarvis. All rights reserved.
+	Copyright (c) 2019, Lynn Jarvis. All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without modification, 
 	are permitted provided that the following conditions are met:
@@ -32,53 +30,44 @@
 */
 #pragma once
 
-#ifndef __SpoutSharedMemory_ // standard way as well
-#define __SpoutSharedMemory_
+#ifndef __SpoutSend__
+#define __SpoutSend__
 
-#include "SpoutCommon.h"
-#include <windowsx.h>
-#include <d3d9.h>
-#include <wingdi.h>
+#include "SpoutSender.h"
 
-using namespace spoututils;
+class SPOUT_DLLEXP SpoutSend {
 
-enum SpoutCreateResult
-{
-	SPOUT_CREATE_FAILED = 0,
-	SPOUT_CREATE_SUCCESS,
-	SPOUT_ALREADY_EXISTS,
-	SPOUT_ALREADY_CREATED,
-};
+	public:
 
-class SPOUT_DLLEXP SpoutSharedMemory {
-public:
-	SpoutSharedMemory();
-	~SpoutSharedMemory();
+	SpoutSend();
+    ~SpoutSend();
 
+	// 2.007 functions
+	bool SetupSender(const char* SenderName, unsigned int width, unsigned int height, bool bInvert = true);
+	bool SendTextureData(GLuint TextureID, GLuint TextureTarget, GLuint HostFbo = 0);
+	bool SendFboData(GLuint FboID);
+	bool SendImageData(const unsigned char* pixels, GLenum glFormat = GL_RGBA, GLuint HostFbo = 0);
+	void Update(unsigned int width, unsigned int height);
+	bool IsInitialized();
+	void CloseSender();
+	unsigned int GetWidth();
+	unsigned int GetHeight();
+	double GetFps();
+	long GetFrame();
+	void DisableFrameCount();
+	bool IsFrameCountEnabled();
+	void HoldFps(int fps = 0);
 
-	// Create a new memory segment, or attach to an existing one
-	SpoutCreateResult Create(const char* name, int size);
+	SpoutSender sender; // For access to all sender functions
 
-	// Opens an existing map
-	bool Open(const char* name);
-	void Close();
+protected :
 
-	// Returns the buffer
-	char* Lock();
-	void Unlock();
-
-	void Debug();
-
-private:
-
-	char*  m_pBuffer;
-	HANDLE m_hMap;
-	HANDLE m_hMutex;
-
-	int m_lockCount;
-
-	const char*	m_pName;
-	int m_size;
+	char m_SenderName[256];
+	GLuint m_TextureID;
+	GLuint m_TextureTarget;
+	bool m_bInvert;
+	unsigned int m_Width;
+	unsigned int m_Height;
 
 };
 

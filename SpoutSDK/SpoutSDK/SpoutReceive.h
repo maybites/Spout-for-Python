@@ -1,13 +1,8 @@
 /*
 
-	spoutSharedMemory.h
-	
-	Thanks and credit to Malcolm Bechard the author of this class
+			SpoutReceive.h
 
-	https://github.com/mbechard
-
-	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	Copyright (c) 2014-2019, Lynn Jarvis. All rights reserved.
+	Copyright (c) 2019, Lynn Jarvis. All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without modification, 
 	are permitted provided that the following conditions are met:
@@ -28,57 +23,55 @@
 	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
 	LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+ 
 */
 #pragma once
 
-#ifndef __SpoutSharedMemory_ // standard way as well
-#define __SpoutSharedMemory_
+#ifndef __SpoutReceive__
+#define __SpoutReceive__
 
-#include "SpoutCommon.h"
-#include <windowsx.h>
-#include <d3d9.h>
-#include <wingdi.h>
+#include "SpoutReceiver.h"
 
-using namespace spoututils;
+class SPOUT_DLLEXP SpoutReceive {
 
-enum SpoutCreateResult
-{
-	SPOUT_CREATE_FAILED = 0,
-	SPOUT_CREATE_SUCCESS,
-	SPOUT_ALREADY_EXISTS,
-	SPOUT_ALREADY_CREATED,
-};
+	public:
 
-class SPOUT_DLLEXP SpoutSharedMemory {
-public:
-	SpoutSharedMemory();
-	~SpoutSharedMemory();
+	SpoutReceive();
+    ~SpoutReceive();
 
+	// 2.007 functions
+	void SetupReceiver(unsigned int width, unsigned int height, bool bInvert = false);
+	void SetReceiverName(const char * SenderName);
+	bool ReceiveTextureData(GLuint TextureID, GLuint TextureTarget, GLuint HostFbo = 0);
+	bool ReceiveImageData(unsigned char *pixels, GLenum glFormat = GL_RGBA, GLuint HostFbo = 0);
+	bool IsUpdated();
+	bool IsInitialized();
+	void CloseReceiver();
+	void SelectSender();
+	// TODO : naming ?
+	char *GetReceiverName();
+	unsigned int GetSenderWidth();
+	unsigned int GetSenderHeight();
+	double GetSenderFps();
+	long GetSenderFrame();
+	bool IsFrameNew();
+	bool HasNewFrame();
+	void DisableFrameCount();
+	void HoldFps(int fps = 0);
 
-	// Create a new memory segment, or attach to an existing one
-	SpoutCreateResult Create(const char* name, int size);
+	SpoutReceiver receiver; // for access to all receiver functions
 
-	// Opens an existing map
-	bool Open(const char* name);
-	void Close();
+protected :
 
-	// Returns the buffer
-	char* Lock();
-	void Unlock();
-
-	void Debug();
-
-private:
-
-	char*  m_pBuffer;
-	HANDLE m_hMap;
-	HANDLE m_hMutex;
-
-	int m_lockCount;
-
-	const char*	m_pName;
-	int m_size;
+	char m_SenderNameSetup[256];
+	char m_SenderName[256];
+	GLuint m_TextureID;
+	GLuint m_TextureTarget;
+	bool m_bInvert;
+	bool m_bUpdate;
+	bool m_bUseActive;
+	unsigned int m_Width;
+	unsigned int m_Height;
 
 };
 

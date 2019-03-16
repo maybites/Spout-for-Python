@@ -1,6 +1,6 @@
 /**
 
-http://www.codeproject.com/Articles/835818/Ultimate-Shared-Memory-A-flexible-class-for-interp
+	http://www.codeproject.com/Articles/835818/Ultimate-Shared-Memory-A-flexible-class-for-interp
 
 	SpoutSharedMemory.cpp
 
@@ -10,10 +10,10 @@ http://www.codeproject.com/Articles/835818/Ultimate-Shared-Memory-A-flexible-cla
 
 	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-		Copyright (c) 2014-2017, Lynn Jarvis. All rights reserved.
+	Copyright (c) 2014-2019, Lynn Jarvis. All rights reserved.
 
-		Redistribution and use in source and binary forms, with or without modification, 
-		are permitted provided that the following conditions are met:
+	Redistribution and use in source and binary forms, with or without modification, 
+	are permitted provided that the following conditions are met:
 
 		1. Redistributions of source code must retain the above copyright notice, 
 		   this list of conditions and the following disclaimer.
@@ -22,16 +22,16 @@ http://www.codeproject.com/Articles/835818/Ultimate-Shared-Memory-A-flexible-cla
 		   this list of conditions and the following disclaimer in the documentation 
 		   and/or other materials provided with the distribution.
 
-		THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"	AND ANY 
-		EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-		OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE	ARE DISCLAIMED. 
-		IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
-		INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
-		PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-		INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-		LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"	AND ANY 
+	EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
+	OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE	ARE DISCLAIMED. 
+	IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+	INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+	LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 */
 
@@ -98,7 +98,9 @@ SpoutCreateResult SpoutSharedMemory::Create(const char* name, int size)
 		// 2.004 apps will have created a 10 sender map which will not be increased in size thereafter.
 	}
 	else {
-		if(err != 0) printf("SpoutSharedMemory::Create - Error = %ld (0x%x)\n", err, err);
+		if (err != 0) {
+			SpoutLogError("SpoutSharedMemory::Create - Error = %ld (0x%x)", err, err);
+		}
 	}
 
 	m_pBuffer = (char*)MapViewOfFile(m_hMap, FILE_MAP_ALL_ACCESS, 0, 0, 0);
@@ -239,15 +241,13 @@ void SpoutSharedMemory::Unlock()
 	}
 }
 
-
 void SpoutSharedMemory::Debug()
 {
-	/*
 	if (m_pName) {
-		printf("(%s) m_hMap = [%x], m_pBuffer = [%x]\n", m_pName, m_hMap, m_pBuffer);
+		SpoutLogNotice("SpoutSharedMemory::Debug : (%s) m_hMap = [%x], m_pBuffer = [%x]", m_pName, m_hMap, m_pBuffer);
 	}
 	else {
-		printf("Shared Memory Map is not open\n");
+		SpoutLogNotice("SpoutSharedMemory::Debug : Shared Memory Map is not open\n");
 	}
-	*/
+
 }
