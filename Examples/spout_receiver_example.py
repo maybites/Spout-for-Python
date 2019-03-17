@@ -58,8 +58,10 @@ def main():
 
 	# Its signature in c++ looks like this: bool pyCreateReceiver(const char* theName, unsigned int theWidth, unsigned int theHeight, bool bUseActive);
     spoutReceiver.SetupReceiver(spoutReceiverWidth,spoutReceiverHeight, False)
-    
-    spoutReceiver.SetReceiverName(receiverName);
+        
+    #spoutReceiver.SetReceiverName(receiverName);
+
+    print("found default sender:", str(spoutReceiver.GetReceiverName()))
 
     # create texture for spout receiver
     textureReceiveID = glGenTextures(1)
@@ -100,8 +102,8 @@ def main():
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, spoutReceiverWidth, spoutReceiverHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, None )
             glBindTexture(GL_TEXTURE_2D, 0)
         
-        if spoutReceiver.GetSenderFrame() > 0:
-            print("frame: ", spoutReceiver.GetSenderFrame())
+        #if spoutReceiver.GetSenderFrame() > 0:
+        #    print("frame: ", spoutReceiver.GetSenderFrame())
             
         # receive texture
         # Its signature in c++ looks like this: bool pyReceiveTexture(const char* theName, unsigned int theWidth, unsigned int theHeight, GLuint TextureID, GLuint TextureTarget, bool bInvert, GLuint HostFBO);
